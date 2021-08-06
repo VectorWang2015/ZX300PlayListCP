@@ -7,12 +7,12 @@ import shutil
 old_dir = "./"
 root_dir = "d:/"
 
-def processSong(song_tuple, new_dir):
+def processSong(song_tuple, old_dir, new_dir):
     """parse song_tuple, cp the song to the new_dir"""
     song_path, song_name = song_tuple
     song_new_path = new_dir+'/'+song_name
-    print("Copying {} ------> {}".format(song_path,song_new_path))
-    # shutil.copy(song_path, song_new_path)
+    print("Copying {} ------> {}".format(old_dir+song_path,song_new_path))
+    shutil.copy(old_dir+song_path, song_new_path)
     print("Done!")
 
 
@@ -81,6 +81,20 @@ def processPlayListFile(file_name):
             result_list.append(song_with_path)
     return result_list
 
+if len(sys.argv)==1:
+    pass
+elif len(sys.argv)==2:
+    old_dir = sys.argv[1]
+else:
+    old_dir = sys.argv[1]
+    root_dir = sys.argv[2]
+
+if old_dir[-1]!='/':
+    old_dir+='/'
+if root_dir[-1]!='/':
+    root_dir+='/'
+
+#print(old_dir, root_dir)
 
 if __name__=="__main__":
     pl_pattern = re.compile(".+\.M3U8")
@@ -90,7 +104,7 @@ if __name__=="__main__":
         if pl_pattern.match(file_name):
             song_list_path = processPlayListFile(file_name)
             dir_name = file_name[:-5]
-            print("PROCESSING {}\n".format(dir_name))
+            print("Processing {}\n".format(dir_name))
             if os.path.exists(root_dir+'/'+dir_name):
                 print("Folder exists!\n")
             else:
@@ -100,6 +114,6 @@ if __name__=="__main__":
             song_list = processSongList(song_list_path)
             #print(song_list)
             for song_tuple in song_list:
-                processSong(song_tuple, root_dir+'/'+dir_name)
-            processNewList(old_dir+file_name, root_dir+'/'+dir_name+'/'+file_name, song_list)
+                processSong(song_tuple, old_dir, root_dir+'/'+dir_name)
+            processNewList(old_dir+'/'+file_name, root_dir+'/'+dir_name+'/'+file_name, song_list)
 
