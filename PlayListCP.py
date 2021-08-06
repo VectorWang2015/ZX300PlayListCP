@@ -102,7 +102,7 @@ if __name__=="__main__":
     
     for file_name in root_file_list:
         if pl_pattern.match(file_name):
-            song_list_path = processPlayListFile(file_name)
+            song_list_path = processPlayListFile(old_dir+file_name)
             dir_name = file_name[:-5]
             print("Processing {}\n".format(dir_name))
             if os.path.exists(root_dir+'/'+dir_name):
