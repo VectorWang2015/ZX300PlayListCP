@@ -55,7 +55,7 @@ def processSongList(song_list_path):
        return a list with tuples (song_with_path, song_name)"""
     result_list=[]
     #song_name_pattern = re.compile(r"/.*?\.(flac)|(m4a)|(mp3)|(ape)")
-    song_name_pattern = re.compile(r"/([^/]*?((\.flac)|(\.m4a)|(\.mp3)|(\.ape)))")
+    song_name_pattern = re.compile(r"/([^/]*?((\.flac)|(\.m4a)|(\.mp3)|(\.ape)|(\.dsf)|(\.dff)))")
     for path in song_list_path:
         song_name = song_name_pattern.search(path).group(1)
         #print(path)
@@ -66,7 +66,7 @@ def processSongList(song_list_path):
 
 def processPlayListFile(file_name):
     """open playlist file, return a list of songs to be copied with relative paths"""
-    song_pattern = re.compile(r".+\.((flac)|(m4a)|(mp3)|(ape))")
+    song_pattern = re.compile(r".+\.((flac)|(m4a)|(mp3)|(ape)|(dff)|(dsf))")
     result_list = []
     try:
         PL_descriptor = open(file_name, mode='r')
